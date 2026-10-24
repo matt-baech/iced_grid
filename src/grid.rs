@@ -34,7 +34,9 @@ const MAX_CELL_CHARS: usize = 300;
 /// How a value is drawn; see [`Grid::format`].
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct Format {
+    /// Draw the value in the style's `dim_text` colour.
     pub dim: bool,
+    /// Draw the value in italics.
     pub italic: bool,
 }
 
@@ -97,11 +99,13 @@ pub fn grid<'a, Theme: Catalog>(state: &'a State, columns: &'a [Column], rows: &
 }
 
 impl<'a, Theme: Catalog> Grid<'a, Theme> {
+    /// Sets the width; [`Length::Fill`] by default.
     pub fn width(mut self, width: impl Into<Length>) -> Self {
         self.width = width.into();
         self
     }
 
+    /// Sets the height; [`Length::Fill`] by default.
     pub fn height(mut self, height: impl Into<Length>) -> Self {
         self.height = height.into();
         self
@@ -120,6 +124,7 @@ impl<'a, Theme: Catalog> Grid<'a, Theme> {
         self
     }
 
+    /// The font of the column titles; the cell font by default.
     pub fn header_font(mut self, font: impl Into<Font>) -> Self {
         self.header_font = Some(font.into());
         self
@@ -137,6 +142,8 @@ impl<'a, Theme: Catalog> Grid<'a, Theme> {
         self
     }
 
+    /// Sets the style; see [`style::from_palette`](crate::style::from_palette)
+    /// for a starting point.
     pub fn style(mut self, style: impl Fn(&Theme, Status) -> Style + 'a) -> Self
     where
         Theme::Class<'a>: From<StyleFn<'a, Theme>>,

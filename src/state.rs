@@ -10,6 +10,7 @@ use iced_core::Vector;
 /// How a column's values line up.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum Align {
+    /// Left-aligned (in left-to-right text).
     #[default]
     Start,
     /// For numbers.
@@ -19,15 +20,19 @@ pub enum Align {
 /// A column header.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Column {
+    /// The text in the header.
     pub title: String,
+    /// How the column's values line up.
     pub align: Align,
 }
 
 impl Column {
+    /// A left-aligned column.
     pub fn new(title: impl Into<String>) -> Self {
         Self { title: title.into(), align: Align::Start }
     }
 
+    /// Sets how the values line up.
     pub fn align(mut self, align: Align) -> Self {
         self.align = align;
         self
@@ -37,9 +42,18 @@ impl Column {
 /// What a click or key selects.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Target {
-    Cell { row: usize, col: usize },
+    /// One cell, by row and column index.
+    Cell {
+        /// The row index.
+        row: usize,
+        /// The column index.
+        col: usize,
+    },
+    /// A whole row.
     Row(usize),
+    /// A whole column.
     Column(usize),
+    /// Every cell.
     All,
 }
 
@@ -78,6 +92,7 @@ impl Selection {
         }
     }
 
+    /// Whether a cell is selected, given the grid's size.
     pub fn contains(&self, row: usize, col: usize, rows: usize, cols: usize) -> bool {
         let (r, c) = self.ranges(rows, cols);
         r.contains(&row) && c.contains(&col)
@@ -94,6 +109,7 @@ pub struct State {
 }
 
 impl State {
+    /// A state with nothing selected, scrolled to the top.
     pub fn new() -> Self {
         Self::default()
     }
@@ -108,6 +124,7 @@ impl State {
         self.scroll.get()
     }
 
+    /// The current selection, if any.
     pub fn selection(&self) -> Option<Selection> {
         self.selection.get()
     }
@@ -146,6 +163,7 @@ impl State {
         self.selection.set(Some(selection));
     }
 
+    /// Selects nothing.
     pub fn clear_selection(&self) {
         self.selection.set(None);
     }

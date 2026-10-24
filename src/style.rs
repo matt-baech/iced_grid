@@ -7,34 +7,46 @@ use iced_core::{Color, Theme};
 /// strongly while it does.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Status {
+    /// The grid doesn't have focus.
     Active,
+    /// The grid was clicked last and takes keyboard input.
     Focused,
 }
 
 /// The appearance of a [`Grid`](crate::Grid).
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Style {
+    /// The background behind the cells.
     pub background: Color,
+    /// The colour of cell values.
     pub text: Color,
     /// Values shown dimmed, such as NULL.
     pub dim_text: Color,
+    /// The background of the header row, the row numbers and the corner.
     pub header_background: Color,
+    /// The colour of the column titles.
     pub header_text: Color,
     /// The row-number column on the left.
     pub row_number: Color,
+    /// The lines between rows and columns.
     pub lines: Color,
+    /// The fill of selected cells.
     pub selection: Color,
     /// The border around the focused cell.
     pub focus: Color,
+    /// The scrollbar thumbs.
     pub scroller: Color,
 }
 
 /// The theme catalog of a [`Grid`](crate::Grid).
 pub trait Catalog: theme::Base {
+    /// The item class of the [`Catalog`].
     type Class<'a>;
 
+    /// The default class produced by the [`Catalog`].
     fn default<'a>() -> Self::Class<'a>;
 
+    /// The [`Style`] of a class with the given status.
     fn style(&self, class: &Self::Class<'_>, status: Status) -> Style;
 }
 

@@ -8,6 +8,8 @@
 //! The app owns a [`State`] per data set (scroll position, column widths and
 //! selection) and passes it in with the columns and rows on every view.
 
+#![warn(missing_docs)]
+
 mod grid;
 mod state;
 

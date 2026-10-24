@@ -8,7 +8,6 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/matt-baech/iced_grid"
 keywords = ["iced", "grid", "table", "widget", "gui"]
 categories = ["gui"]
-publish = false
 
 [dependencies]
 iced_core = "0.14"
